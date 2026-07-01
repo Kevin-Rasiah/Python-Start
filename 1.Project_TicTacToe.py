@@ -27,18 +27,23 @@ def mache_zug(brett,spieler,zeile,spalte):
 def pruefe_gewonnen(brett,spieler):
     for zeile in range(3):
         if brett[zeile][0] == brett[zeile][1] == brett[zeile][2] == spieler:
-            True
+            return True
     
     for spalte in range(3):
         if brett[0][spalte] == brett[1][spalte] == brett[2][spalte] == spieler:
-            True
+            return True
+    
+    if brett[0][0] == brett[1][1] == brett[2][2] == spieler or brett[0][2] == brett[1][1] == brett[2][0] == spieler:
+        return True
+    
+#5 Untenschieden prüfen
+def pruefe_unendschieden(brett):
+    for zeile in brett:
+        if " " in zeile:
+            return False
+    return True
 
-
-
-
-
-
-
+#6 main Funktion
 def spiele_tic_tac_toe():
     brett = erstelle_brett()
     aktueller_spieler = "X"
@@ -50,11 +55,15 @@ def spiele_tic_tac_toe():
         if not mache_zug(brett,aktueller_spieler,zeile,spalte):
             print("Ungültig, versuche es erneut!")
             continue
-
+        if pruefe_gewonnen(brett,aktueller_spieler):
+            drucke_brett(brett)
+            print(aktueller_spieler , ",du hast gewonnen!" )
+            break
+        elif pruefe_unendschieden(brett):
+            drucke_brett(brett)
+            print("Unentschieden")
+            break
         aktueller_spieler = "O" if aktueller_spieler == "X" else "X"
 
 spiele_tic_tac_toe()
  
-print("Test für Github")
-
-
